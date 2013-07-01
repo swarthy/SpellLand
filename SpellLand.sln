@@ -1,0 +1,24 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpellLand", "SpellLand\SpellLand\SpellLand.csproj", "{13844A1C-BF2A-4ED1-8331-D9938959FB67}"
+EndProject
+Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "SpellLandContent", "SpellLand\SpellLandContent\SpellLandContent.contentproj", "{0F777C7F-FCE5-49B3-838F-AE27809D7707}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{13844A1C-BF2A-4ED1-8331-D9938959FB67}.Debug|x86.ActiveCfg = Debug|x86
+		{13844A1C-BF2A-4ED1-8331-D9938959FB67}.Debug|x86.Build.0 = Debug|x86
+		{13844A1C-BF2A-4ED1-8331-D9938959FB67}.Release|x86.ActiveCfg = Release|x86
+		{13844A1C-BF2A-4ED1-8331-D9938959FB67}.Release|x86.Build.0 = Release|x86
+		{0F777C7F-FCE5-49B3-838F-AE27809D7707}.Debug|x86.ActiveCfg = Debug|x86
+		{0F777C7F-FCE5-49B3-838F-AE27809D7707}.Release|x86.ActiveCfg = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
