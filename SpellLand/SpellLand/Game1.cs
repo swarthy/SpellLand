@@ -43,7 +43,8 @@ namespace SpellLand
         /// </summary>
         protected override void Initialize()
         {            
-            Utilities.Initialize();
+            Utilities.Initialize();            
+            
             if (OnInitialize != null)
                 OnInitialize();            
             base.Initialize();
@@ -63,7 +64,8 @@ namespace SpellLand
             textures.Add(Content.Load<Texture2D>("scrissors"));
             textures.Add(Content.Load<Texture2D>("star"));
             //textures.Add(Content.Load<Texture2D>("diamond"));
-            particleEngine = new ParticleEngine(textures, new Vector2(400, 240));            
+            particleEngine = new ParticleEngine(textures, new Vector2(400, 240));          
+  
             if (OnLoadContent != null)
                 OnLoadContent();
         }
@@ -84,8 +86,8 @@ namespace SpellLand
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
-        {                                
-            particleEngine.EmitterLocation = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
+        {   
+
             if (OnUpdate != null)
                 OnUpdate(gameTime);    
             base.Update(gameTime);
@@ -98,6 +100,7 @@ namespace SpellLand
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+
             if (OnDraw != null)
                 OnDraw(spriteBatch, gameTime);
             base.Draw(gameTime);

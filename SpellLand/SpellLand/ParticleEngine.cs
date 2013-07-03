@@ -24,6 +24,12 @@ namespace SpellLand
             Utilities.Game.OnUpdate += Update;
             Utilities.Game.OnDraw += Draw;
 
+            MouseController.OnMove += (m) => {
+                EmitterLocation = new Vector2(m.X, m.Y);
+                for (int i = 0; i < Total; i++)                
+                    particles.Add(GenerateNewParticle());                
+            };
+
             Utilities.Console.AddCommand("particles_ttl", (args) =>
             {
                 if (args.Length > 0)
@@ -66,11 +72,6 @@ namespace SpellLand
         }
         public void Update(GameTime gameTime)
         {
-            for (int i = 0; i < Total; i++)
-            {
-                particles.Add(GenerateNewParticle());
-            }
-
             for (int particle = 0; particle < particles.Count; particle++)
             {
                 particles[particle].Update();

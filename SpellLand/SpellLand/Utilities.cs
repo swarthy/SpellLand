@@ -20,9 +20,10 @@ namespace SpellLand
         {
             Game.OnDraw += Draw;
             Game.OnUpdate += Update;
+            Game.OnUpdate += MouseController.Update;
             Game.OnUpdate += KeyboardController.Update;                        
             Game.OnLoadContent += () => { Console.Options.Font = Game.Content.Load<SpriteFont>("consoleFont"); ConsoleInitialize(); };
-            KeyboardController.OnKeyDown += (key) => { if (key.ToString() == "Escape") Environment.Exit(0); };
+            KeyboardController.OnKeyDown += (key) => { if (key == Keys.Escape) Environment.Exit(0); };                        
         }
         public static void ConsoleInitialize()
         {
