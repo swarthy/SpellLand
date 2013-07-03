@@ -20,6 +20,31 @@ namespace SpellLand
             this.textures = textures;
             this.particles = new List<Particle>();
             random = new Random();
+
+            Utilities.Game.OnUpdate += Update;
+            Utilities.Game.OnDraw += Draw;
+
+            Utilities.Console.AddCommand("particles_ttl", (args) =>
+            {
+                if (args.Length > 0)
+                {
+                    Utilities.Game.particleEngine.TTL = int.Parse(args[0]);
+                    return "";
+                }
+                else
+                    return Utilities.Game.particleEngine.TTL.ToString();
+            }, "Particles time to live");
+
+            Utilities.Console.AddCommand("particles_total_count", (args) =>
+            {
+                if (args.Length > 0)
+                {
+                    Utilities.Game.particleEngine.Total = int.Parse(args[0]);
+                    return "";
+                }
+                else
+                    return Utilities.Game.particleEngine.Total.ToString();
+            }, "Particles count, creating every update cycle"); 
         }
         private Particle GenerateNewParticle()
         {
@@ -39,7 +64,7 @@ namespace SpellLand
 
             return new Particle(texture, position, velocity, angle, angularVelocity, color, size, ttl);
         }
-        public void Update()
+        public void Update(GameTime gameTime)
         {
             for (int i = 0; i < Total; i++)
             {
@@ -56,7 +81,7 @@ namespace SpellLand
                 }
             }            
         }
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
             spriteBatch.Begin();
             for (int index = 0; index < particles.Count; index++)

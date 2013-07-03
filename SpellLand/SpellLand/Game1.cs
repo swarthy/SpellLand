@@ -12,6 +12,9 @@ using XNAGameConsole;
 
 namespace SpellLand
 {
+    public delegate void InitializeEvent();
+    public delegate void UpdateEvent(GameTime gameTime);
+    public delegate void DrawEvent(SpriteBatch spriteBatch, GameTime gameTime = null);
     /// <summary>
     /// This is the main type for your game
     /// </summary>
@@ -19,13 +22,17 @@ namespace SpellLand
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        public InitializeEvent OnInitialize, OnLoadContent, OnUnloadContent;
+        public UpdateEvent OnUpdate;
+        public DrawEvent OnDraw;
+
         internal ParticleEngine particleEngine;
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            Utilities.game = this;
+            Utilities.Game = this;
         }
 
         /// <summary>
@@ -35,9 +42,10 @@ namespace SpellLand
         /// and initialize them as well.
         /// </summary>
         protected override void Initialize()
-        {
-            // TODO: Add your initialization logic here   
-            Utilities.Initialize();         
+        {            
+            Utilities.Initialize();
+            if (OnInitialize != null)
+                OnInitialize();            
             base.Initialize();
         }
 
@@ -46,19 +54,18 @@ namespace SpellLand
         /// all of your content.
         /// </summary>
         protected override void LoadContent()
-        {
-            // Create a new SpriteBatch, which can be used to draw textures.
+        {            
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            Utilities.Console = new GameConsole(this, spriteBatch, new GameConsoleOptions {Prompt = ">"});
-            Utilities.ConsoleInitialize();
+            Utilities.Console = new GameConsole(this, spriteBatch, new GameConsoleOptions {Prompt = ">"});            
             List<Texture2D> textures = new List<Texture2D>();
             //textures.Add(Content.Load<Texture2D>("circle"));
             textures.Add(Content.Load<Texture2D>("snow"));
             textures.Add(Content.Load<Texture2D>("scrissors"));
             textures.Add(Content.Load<Texture2D>("star"));
             //textures.Add(Content.Load<Texture2D>("diamond"));
-            particleEngine = new ParticleEngine(textures, new Vector2(400, 240));
-            // TODO: use this.Content to load your game content here
+            particleEngine = new ParticleEngine(textures, new Vector2(400, 240));            
+            if (OnLoadContent != null)
+                OnLoadContent();
         }
 
         /// <summary>
@@ -67,8 +74,8 @@ namespace SpellLand
         /// </summary>
         protected override void UnloadContent()
         {
-            // TODO: Unload any non ContentManager content here
-            
+            if (OnUnloadContent != null)
+                OnUnloadContent();            
         }
 
         /// <summary>
@@ -77,16 +84,10 @@ namespace SpellLand
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
-        {
-            // Allows the game to exit    
-            Utilities.Update(gameTime);            
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
-                this.Exit();
+        {                                
             particleEngine.EmitterLocation = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
-            particleEngine.Update();
-
-            // TODO: Add your update logic here
-
+            if (OnUpdate != null)
+                OnUpdate(gameTime);    
             base.Update(gameTime);
         }
 
@@ -97,10 +98,8 @@ namespace SpellLand
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-            Utilities.Draw();
-            particleEngine.Draw(spriteBatch);
-            // TODO: Add your drawing code here
-
+            if (OnDraw != null)
+                OnDraw(spriteBatch, gameTime);
             base.Draw(gameTime);
         }
     }

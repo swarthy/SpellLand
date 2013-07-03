@@ -12,17 +12,20 @@ namespace SpellLand
     {
         public static GameConsole Console;
         internal static bool Debug = true;
-        internal static Game1 game;
+        internal static Game1 Game;
         public static int frameRate = 0;
         static int frameCounter = 0;
         static TimeSpan elapsedTime = TimeSpan.Zero;
         public static void Initialize()
-        {            
+        {
+            Game.OnDraw += Draw;
+            Game.OnUpdate += Update;
+            Game.OnUpdate += KeyboardController.Update;                        
+            Game.OnLoadContent += () => { Console.Options.Font = Game.Content.Load<SpriteFont>("consoleFont"); ConsoleInitialize(); };
+            KeyboardController.OnKeyDown += (key) => { if (key.ToString() == "Escape") Environment.Exit(0); };
         }
         public static void ConsoleInitialize()
         {
-            Console.Options.Font = game.Content.Load<SpriteFont>("consoleFont");
-
             Console.AddCommand("cursor_position", (args) =>
             {
                 if (args.Length > 0)
@@ -32,29 +35,7 @@ namespace SpellLand
                 }
                 else
                     return Mouse.GetState().ToString();
-            }, "Position of mouse controller");
-
-            Console.AddCommand("particles_ttl", (args) =>
-            {
-                if (args.Length > 0)
-                {
-                    game.particleEngine.TTL = int.Parse(args[0]);
-                    return "";
-                }
-                else
-                    return game.particleEngine.TTL.ToString();
-            }, "Particles time to live");
-
-            Console.AddCommand("particles_total_count", (args) =>
-            {
-                if (args.Length > 0)
-                {
-                    game.particleEngine.Total = int.Parse(args[0]);
-                    return "";
-                }
-                else
-                    return game.particleEngine.Total.ToString();
-            }, "Particles count, creating every update cycle");           
+            }, "Position of mouse controller");          
         }
         public static void Update(GameTime gameTime)
         {
@@ -64,10 +45,10 @@ namespace SpellLand
                 elapsedTime -= TimeSpan.FromSeconds(1);
                 frameRate = frameCounter;
                 frameCounter = 0;
-                game.Window.Title = frameRate.ToString();            
+                Game.Window.Title = frameRate.ToString();            
             }            
         }
-        public static void Draw()
+        public static void Draw(SpriteBatch sb, GameTime gt)
         {
             frameCounter++;
         }
