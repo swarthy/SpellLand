@@ -13,6 +13,10 @@ namespace SpellLand
         public static KeyboardEvent OnKeyDown;
         public static KeyboardEvent OnKeyUp;
         public static KeyboardState Keyboard { get; private set; }
+        public static void Initialize()
+        {
+            Utilities.Game.OnUpdate += Update;
+        }
         public static void Update(GameTime gameTime)
         {
             KeyboardState newkb = Microsoft.Xna.Framework.Input.Keyboard.GetState();            

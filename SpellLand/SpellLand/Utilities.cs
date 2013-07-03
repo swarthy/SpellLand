@@ -20,9 +20,15 @@ namespace SpellLand
         {
             Game.OnDraw += Draw;
             Game.OnUpdate += Update;
-            Game.OnUpdate += MouseController.Update;
-            Game.OnUpdate += KeyboardController.Update;                        
+
+            Game.OnInitialize += MouseController.Initialize;//именно в таком порядке)
+            Game.OnInitialize += KeyboardController.Initialize;
+            Game.OnInitialize += Interface.Initialize;
+            
+            //консоль закрыта (хотя исходники есть, ее нельзя вшивать кодом)), поэтому пусть тут инициализируется (в лоадконтент - т.к. шрифт подгружается)
             Game.OnLoadContent += () => { Console.Options.Font = Game.Content.Load<SpriteFont>("consoleFont"); ConsoleInitialize(); };
+
+            //выход... временный
             KeyboardController.OnKeyDown += (key) => { if (key == Keys.Escape) Environment.Exit(0); };                        
         }
         public static void ConsoleInitialize()

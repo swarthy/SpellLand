@@ -12,6 +12,10 @@ namespace SpellLand
     {
         public static MouseEvent OnDown, OnUp, OnMove;        
         public static MouseState Mouse { get; private set; }
+        public static void Initialize()
+        {
+            Utilities.Game.OnUpdate += Update;
+        }
         public static void Update(GameTime gameTime)
         {
             MouseState newms = Microsoft.Xna.Framework.Input.Mouse.GetState();
