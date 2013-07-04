@@ -12,6 +12,27 @@ namespace SpellLand
     {
         public static MouseEvent OnDown, OnUp, OnMove;        
         public static MouseState Mouse { get; private set; }
+        public static bool LeftPressed
+        {
+            get
+            {
+                return Mouse.LeftButton == ButtonState.Pressed;
+            }
+        }
+        public static bool RightPressed
+        {
+            get
+            {
+                return Mouse.RightButton == ButtonState.Pressed;
+            }
+        }
+        public static bool MiddlePressed
+        {
+            get
+            {
+                return Mouse.MiddleButton == ButtonState.Pressed;
+            }
+        }
         public static void Initialize()
         {
             Utilities.Game.OnUpdate += Update;
