@@ -29,7 +29,7 @@ namespace SpellLand
             Game.OnLoadContent += () => { Console.Options.Font = Game.Content.Load<SpriteFont>("consoleFont"); ConsoleInitialize(); };
 
             //выход... временный
-            KeyboardController.OnKeyDown += (key) => { if (key == Keys.Escape) Environment.Exit(0); };                        
+            KeyboardController.OnKeyDown += (key) => { if (key == Keys.Escape) Environment.Exit(0); };            
         }
         public static void ConsoleInitialize()
         {
